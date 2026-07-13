@@ -29,13 +29,15 @@ https://github.com/Iyazuddin/Quiz_Spark
 
 ## Tech Stack
 
-* React.js
-* Vite 
-* JavaScript (JSX) 
-* Tailwind CSS
-* CSS3 
-* ESLint
-* Node.js & npm 
+| Technology | Purpose |
+|------------|---------|
+| React.js | Building reusable UI components |
+| JavaScript (ES6+) | Application logic and state handling |
+| Vite | Fast development and optimized builds |
+| Tailwind CSS | Styling and responsive UI design |
+| CSS3 | Additional styling and layout |
+| ESLint | Code quality and consistency |
+| Node.js & npm | Package management and development environment |
 
 ---
 
