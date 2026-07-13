@@ -46,20 +46,20 @@ https://github.com/Iyazuddin/Quiz_Spark
 ```text
 Quiz_Spark/
 │
-├── public/
-│
 ├── src/
-│   ├── assets/
 │   ├── components/
 │   ├── App.jsx
+│   ├── index.css
 │   ├── main.jsx
-│   └── index.css
+│   └── vite-env.d.ts
 │
 ├── index.html
 ├── package.json
-├── vite.config.ts
+├── package-lock.json
+├── postcss.config.js
 ├── tailwind.config.js
 ├── eslint.config.js
+├── tsconfig.app.json
 └── README.md
 ```
 
