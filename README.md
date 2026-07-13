@@ -1,4 +1,4 @@
-# Quiz Task
+# Quiz Spark
 
 A modern and responsive quiz application built to test users' knowledge through an interactive question-and-answer experience. The application provides instant feedback, tracks the user's score, and offers a clean, user-friendly interface across desktop and mobile devices.
 
@@ -8,7 +8,7 @@ A modern and responsive quiz application built to test users' knowledge through 
 
 ## 📂 GitHub Repository
 
-https://github.com/Iyazuddin/Quiz_Task
+https://github.com/Iyazuddin/Quiz_Spark
 
 ## ✨ Features
 
@@ -34,13 +34,13 @@ https://github.com/Iyazuddin/Quiz_Task
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Iyazuddin/Quiz_Task.git
+   git clone https://github.com/Iyazuddin/Quiz_Spark
    ```
 
 2. Navigate to the project folder:
 
    ```bash
-   cd Quiz_Task
+   cd Quiz_Spark
    ```
 
 3. Open `index.html` in your browser or use a local development server.
@@ -57,7 +57,7 @@ https://github.com/Iyazuddin/Quiz_Task
 ## 📁 Project Structure
 
 ```text
-Quiz_Task/
+Quiz_Spark/
 ├── index.html
 ├── style.css
 ├── script.js
