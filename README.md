@@ -21,9 +21,13 @@ https://github.com/Iyazuddin/Quiz_Task
 
 ## 🛠️ Tech Stack
 
-* HTML5
-* CSS3
-* JavaScript (ES6+)
+* React.js
+* Vite 
+* JavaScript (JSX) 
+* Tailwind CSS
+* CSS3 
+* ESLint
+* Node.js & npm 
 
 ## 📦 Installation
 
