@@ -179,56 +179,83 @@ function App() {
     }));
   };
 
+  // Background layer shared across all views
+  const Background = () => (
+    <div className="quiz-bg">
+      <div className="orb orb-1" />
+      <div className="orb orb-2" />
+      <div className="orb orb-3" />
+    </div>
+  );
+
   if (state.error) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-500 mb-4">{state.error}</p>
-          <button
-            onClick={startQuiz}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
-            Try Again
-          </button>
+      <>
+        <Background />
+        <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+          <div className="glass-card p-10 text-center max-w-md animate-scale-in">
+            <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-red-500/10 flex items-center justify-center">
+              <span className="text-3xl">⚠️</span>
+            </div>
+            <p className="text-red-300 mb-6 text-lg">{state.error}</p>
+            <button onClick={startQuiz} className="btn-primary flex items-center justify-center gap-2 w-full">
+              Try Again
+            </button>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   if (state.isLoading) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="flex items-center gap-2">
-          <Loader2 className="w-6 h-6 animate-spin" />
-          <span>Loading questions...</span>
+      <>
+        <Background />
+        <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+          <div className="glass-card p-10 text-center animate-scale-in">
+            <Loader2 className="w-10 h-10 animate-spin text-spark-400 mx-auto mb-4" />
+            <span className="shimmer-text text-xl font-semibold font-display">
+              Loading questions...
+            </span>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   if (!state.quizStarted) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-        <EmailForm onSubmit={handleEmailSubmit} />
-      </div>
+      <>
+        <Background />
+        <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+          <EmailForm onSubmit={handleEmailSubmit} />
+        </div>
+      </>
     );
   }
 
   if (state.quizEnded) {
     return (
-      <div className="min-h-screen bg-gray-100 py-8 px-4">
-        <div className="mb-8">
-          <QuizSummary
-            score={state.score}
-            totalQuestions={TOTAL_QUESTIONS}
-            onRestart={restartQuiz}
-          />
+      <>
+        <Background />
+        <div className="relative z-10 min-h-screen py-10 px-4">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <div className="animate-slide-up">
+              <QuizSummary
+                score={state.score}
+                totalQuestions={TOTAL_QUESTIONS}
+                onRestart={restartQuiz}
+              />
+            </div>
+            <div className="animate-slide-up stagger-2">
+              <DetailedSummary
+                answers={getDetailedAnswers()}
+                onRestart={restartQuiz}
+              />
+            </div>
+          </div>
         </div>
-        <DetailedSummary
-          answers={getDetailedAnswers()}
-          onRestart={restartQuiz}
-        />
-      </div>
+      </>
     );
   }
 
@@ -236,36 +263,61 @@ function App() {
   if (!currentQuestion) return null;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="max-w-4xl mx-auto pt-8">
-        <div className="flex justify-between items-center mb-6">
-          <Timer timeRemaining={state.timeRemaining} />
-          <p className="text-lg font-semibold text-gray-600">
-            Question {state.currentQuestionIndex + 1} of {TOTAL_QUESTIONS}
-          </p>
+    <>
+      <Background />
+      <div className="relative z-10 min-h-screen p-4">
+        <div className="max-w-4xl mx-auto pt-6">
+          {/* Header Bar */}
+          <div className="flex justify-between items-center mb-6 animate-fade-in">
+            <Timer timeRemaining={state.timeRemaining} />
+            <div className="glass-card px-4 py-2">
+              <p className="text-sm font-medium text-spark-200">
+                Question{' '}
+                <span className="text-spark-400 font-bold text-lg">
+                  {state.currentQuestionIndex + 1}
+                </span>{' '}
+                <span className="text-spark-200/50">of</span>{' '}
+                <span className="text-spark-300 font-semibold">{TOTAL_QUESTIONS}</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="progress-bar-track mb-6 animate-fade-in">
+            <div
+              className="progress-bar-fill"
+              style={{ width: `${((state.currentQuestionIndex + 1) / TOTAL_QUESTIONS) * 100}%` }}
+            />
+          </div>
+
+          {/* Navigation */}
+          <div className="animate-slide-up">
+            <QuestionNavigation
+              totalQuestions={TOTAL_QUESTIONS}
+              currentQuestion={state.currentQuestionIndex}
+              visitedQuestions={state.visitedQuestions}
+              answers={state.answers}
+              onNavigate={navigateToQuestion}
+            />
+          </div>
+
+          {/* Question Card */}
+          <div className="animate-slide-up stagger-2">
+            <QuizQuestion
+              question={currentQuestion.question}
+              options={currentQuestion.shuffledOptions}
+              onAnswer={handleAnswer}
+              onNext={handleNext}
+              onPrevious={handlePrevious}
+              onSubmit={handleSubmit}
+              currentAnswer={state.answers[state.currentQuestionIndex] || ''}
+              isFirst={state.currentQuestionIndex === 0}
+              isLast={state.currentQuestionIndex === TOTAL_QUESTIONS - 1}
+            />
+          </div>
         </div>
-
-        <QuestionNavigation
-          totalQuestions={TOTAL_QUESTIONS}
-          currentQuestion={state.currentQuestionIndex}
-          visitedQuestions={state.visitedQuestions}
-          answers={state.answers}
-          onNavigate={navigateToQuestion}
-        />
-
-        <QuizQuestion
-          question={currentQuestion.question}
-          options={currentQuestion.shuffledOptions}
-          onAnswer={handleAnswer}
-          onNext={handleNext}
-          onPrevious={handlePrevious}
-          onSubmit={handleSubmit}
-          currentAnswer={state.answers[state.currentQuestionIndex] || ''}
-          isFirst={state.currentQuestionIndex === 0}
-          isLast={state.currentQuestionIndex === TOTAL_QUESTIONS - 1}
-        />
       </div>
-    </div>
+    </>
   );
 }
 
